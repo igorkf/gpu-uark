@@ -76,11 +76,17 @@ Now, we are ready to run the tasks we need.
     squeue -u USERNAME
     ```
 
-Some files will be written to `output`.   
+Some files will be written to `logs` and `output`.  
+Check the log:
+```
+cat logs/prep_geno.log
+```
+
 Check the genotypic data:
 ```
 head output/geno_ok.csv
 ```
+
 Check the phenotypic data:
 ```
 head output/train_val_test.csv
@@ -105,3 +111,28 @@ Dr. Fernandes has two private nodes that have more computational power. To prepr
     ```
 
 The output should be the same.
+
+### Configuring Python environment with GPU dependencies
+1. Run the configuration task:
+    ```
+    sbatch 2-config_python_env.sh
+    ```
+
+Check the logs:
+```
+cat logs/config_python_env.out
+```
+
+See that a new Python environment was created. It is packed in a single folder called `myenv`:
+```
+ls -lht myenv
+```
+It has all the libraries (dependencies) we need to train the models using Python.
+
+### Performing feature engineering and others
+Now that we have the genotypic and phenotypic files cleaned (`output/geno_ok.csv` and `output/train_val_test.csv`), we can perform other steps such as feature engineering to generate the final data for training and evaluating the models.
+
+1. Run:
+    ```
+    sbatch 3-create-datasets.sh
+    ```

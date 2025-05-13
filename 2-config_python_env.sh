@@ -13,10 +13,9 @@ module purge
 module load python
 
 ## create python environment
-echo "Creating Python environment..."
-python3 -m venv gpu-uark # create virtual environment
-source gpu-uark/bin/activate
-pip3 install --upgrade pip
+python3 -m venv myenv # create an virtual environment called "myenv"
+source myenv/bin/activate # activate it
+pip3 install --upgrade pip # upgrade installation manager (pip)
 nvidia-smi # check CUDA version
-pip3 install -r requirements.txt
-pip3 list
+pip3 install -r requirements.txt # install packages
+pip3 list # list packages
