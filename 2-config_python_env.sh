@@ -10,12 +10,20 @@
 
 ## configs 
 module purge
-module load python
+module load python/2024.02-1-anaconda
+python3 --version
 
 ## create python environment
-python3 -m venv myenv # create an virtual environment called "myenv"
-source myenv/bin/activate # activate it
-pip3 install --upgrade pip # upgrade installation manager (pip)
-nvidia-smi # check CUDA version
-pip3 install -r requirements.txt # install packages
-pip3 list # list packages
+python -m venv myenv # create an virtual environment called "myenv"
+source myenv/bin/activate
+pip install --upgrade pip
+
+## install ligthgbm (it needs GCC 9 to compile)
+module load gcc/9
+pip install cmake ninja lightgbm
+module purge gcc/9
+
+# install other libs
+nvidia-smi # check CUDA version to see if GPU is working
+pip install -r requirements.txt # install packages
+pip list # list packages
