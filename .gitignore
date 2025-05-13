@@ -7,4 +7,4 @@ output/*.csv
 logs/*.log
 logs/*.out
 
-gpu-uark
+myenv

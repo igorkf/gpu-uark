@@ -2,8 +2,7 @@
 
 #SBATCH --job-name=prep
 #SBATCH --output=logs/preprocessing.out
-#SBATCH --partition=condo
-#SBATCH --constraint=samuelbf
+#SBATCH --partition=cloud72
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -11,7 +10,7 @@
 
 ## configs 
 module purge
-module load os/el9 gcc/14.2.1 mkl/21.3.0 R/4.4.1-el9-gnu
+module load intel/21.2.0 mkl/21.3.0 gcc/11.2.1 R/4.3.0
 
 ## copy needed files to /scratch
 cd /scratch/$SLURM_JOB_ID
@@ -34,5 +33,5 @@ Rscript src/prep_geno.R > logs/prep_geno.log && \
 ## copy needed output files to /home
 scp logs/prep_geno.log $SLURM_SUBMIT_DIR/logs/
 scp logs/preprocessing.log $SLURM_SUBMIT_DIR/logs/
-scp output/geno_ok.csv output/ $SLURM_SUBMIT_DIR/output/
+scp output/geno_ok.csv $SLURM_SUBMIT_DIR/output/
 scp output/train_val_test.csv $SLURM_SUBMIT_DIR/output/
