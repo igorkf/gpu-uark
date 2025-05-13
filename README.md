@@ -129,10 +129,15 @@ ls -lht myenv
 ```
 It has all the libraries (dependencies) we need to train the models using Python.
 
-### Performing feature engineering and others
+### Performing feature engineering and other steps
 Now that we have the genotypic and phenotypic files cleaned (`output/geno_ok.csv` and `output/train_val_test.csv`), we can perform other steps such as feature engineering to generate the final data for training and evaluating the models.
 
 1. Run:
     ```
     sbatch 3-create-datasets.sh
     ```
+
+Check the output files:
+```
+ls -lht output
+```
