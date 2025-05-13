@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=prep
-#SBATCH --output=logs/preprocessing.out
+#SBATCH --output=logs/prep_geno.out
 #SBATCH --partition=condo
 #SBATCH --constraint=samuelbf
 #SBATCH --nodes=1
@@ -24,17 +24,13 @@ scp $SLURM_SUBMIT_DIR/data/Training_data/5_Genotype_Data_All_2014_2025_Hybrids_n
 scp $SLURM_SUBMIT_DIR/data/Training_data/1_Training_Trait_Data_2014_2023.csv data/Training_data
 scp $SLURM_SUBMIT_DIR/data/Testing_data/1_Submission_Template_2024.csv data/Testing_data
 scp $SLURM_SUBMIT_DIR/src/prep_geno.R src/
-scp $SLURM_SUBMIT_DIR/src/preprocessing.R src/
 
 #####################################################
 ## run tasks
 #####################################################
-Rscript src/prep_geno.R > logs/prep_geno.log && \
-    Rscript src/preprocessing.R > logs/preprocessing.log
+Rscript src/prep_geno.R > logs/prep_geno.log
 #####################################################
 
 ## copy needed output files to /home
 scp logs/prep_geno.log $SLURM_SUBMIT_DIR/logs/
-scp logs/preprocessing.log $SLURM_SUBMIT_DIR/logs/
 scp output/geno_ok.csv $SLURM_SUBMIT_DIR/output/
-scp output/train_val_test.csv $SLURM_SUBMIT_DIR/output/

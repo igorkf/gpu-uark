@@ -87,11 +87,6 @@ Check the genotypic data:
 head output/geno_ok.csv
 ```
 
-Check the phenotypic data:
-```
-head output/train_val_test.csv
-```
-
 Bonus (optional):   
 Dr. Fernandes has two private nodes that have more computational power. To preprocess the data using the private nodes, we have to access a different operation system (OS) and then run the task:
 
@@ -130,7 +125,7 @@ ls -lht myenv
 It has all the libraries (dependencies) we need to train the models using Python.
 
 ### Performing feature engineering and other steps
-Now that we have the genotypic and phenotypic files cleaned (`output/geno_ok.csv` and `output/train_val_test.csv`), we can perform other steps such as feature engineering to generate the final data for training and evaluating the models.
+Now that we have the genotypic data cleaned (`output/geno_ok.csv`), we can perform other steps such as feature engineering to generate the final data for training and evaluating the models.
 
 1. Run:
     ```
@@ -141,3 +136,5 @@ Check the output files:
 ```
 ls -lht output
 ```
+
+In this case, the training data comprises trials from 2021, whereas validation data trials from 2022. Thus, this is a case of CV0-Year, where environments from a future year are untested. You could test other cross-validation scenarios, but this would demand some changes in the code.

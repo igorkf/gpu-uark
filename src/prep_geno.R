@@ -6,8 +6,8 @@ if (!"gdsfmt" %in% pkgs) BiocManager::install("gdsfmt")
 
 library(gdsfmt)
 library(SNPRelate)
-library(dplyr)
-library(ggplot2)
+require(dplyr)
+require(data.table)
 
 filter_maf <- function(tab, cutoff) {
   ns <- nrow(tab)
