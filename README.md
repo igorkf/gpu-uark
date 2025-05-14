@@ -202,3 +202,88 @@ See the usage (%), temperature (C), etc.
 In this case, as the data is not that big, the usage is about 20% only.   
 The results for both cases (CPU) and (GPU) should be similar, although using the GPU can be non-deterministic for some operations.   
 Predictions are stored at `output/pred_nn_*.csv`.
+
+## Coding in the cluster using an Integrated Development Environment (IDE)
+
+Two IDEs are pretty good for coding in Python:
+
+- [VSCode](https://code.visualstudio.com/Download)
+- [Cursor](https://www.cursor.com/downloads)
+
+Cursor is a new IDE with built-in LMMs. You can code and use ChatGPT-like tools inside Cursor to help you code better. You can even use your OpenAI API and choose different LLM models (gpt, claude, gemini, etc.).
+
+### Connecting to the cluster via SSH
+
+After downloading and installing the IDE, we need to set some configurations.
+
+1. Hit `Ctrl + Shift + P`, type `Connect to Host...` and hit `Enter`
+2. Choose `Configure SSH Hosts...`
+3. Choose the Users option (e.g., for my Windows it it `C:\Users\igork\.ssh\config`
+4. Type the following (changing USERNAME by your username):
+    ```
+    Host c1601
+      HostName c1601
+      ProxyJump hpc-portal2.hpc.uark.edu
+      User USERNAME
+
+    Host hpc-portal2.hpc.uark.edu
+      HostName hpc-portal2.hpc.uark.edu
+      User USERNAME
+    ```
+
+The configuration above connects to the login node and "jumps" to the given node (in this case, `c1601`). This means the IDE will connect to the node `c1601`, which uses the `cloud72` partition. If you want to connect to another node, change the `Host NODE` and `HostName NODE` parts.   
+
+5. Hit again `Ctrl + Shift + P`, type `Connect to Host...` and hit `Enter`
+6. Choose the node you typed above.
+
+A new window will pop up, and, if the connection was successful, you now are connect to the cluster. Open a terminal inside your IDE and you should see something like this:
+```
+c1601:igorf:~$
+```
+
+This means we are using the node `c1601`. For now on, you can code and run computational things in the terminal if you need.
+
+### Potential problems
+
+#### Connection unauthorized
+We tried to connect to a specific node, but this node doesn't "know" who is trying to connect. In this case, we need to add our public key in the node's authorized keys list. 
+
+1. Open a new terminal on your local machine (note connected to the cluster)
+2. Print your public key and copy it
+    ```
+    # in Windows
+    type C:\Users\igork\.ssh\id_rsa.pub
+    ```
+    ```
+    # mac and Linux
+    cat ~/.ssh/id_rsa.pub
+    ```
+3. Login on the cluster (change USERNAME to your username):
+    ```
+    ssh USERNAME@hpc-portal2.hpc.uark.edu
+    ```
+
+4. Connect to the node chosen above (in this case, `c1601`):
+    ```
+    ssh c1601
+    ```
+
+5. Open the authorized keys file:
+    ```
+    nano cat ~/.ssh/authorized_keys
+    ```
+
+6. Go to the last line and paste the content you copied in step 2
+
+7. Hit `Ctrl + X`, then `Y`, then `Enter`
+
+### Running R
+1. Load the R modules:
+    ```
+    module load intel/21.2.0 mkl/21.3.0 R/4.3.0 gcc/11.2.1
+    ```
+
+2. Run:
+    ```
+    R
+    ```
