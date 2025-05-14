@@ -23,9 +23,10 @@ scp $SLURM_SUBMIT_DIR/src/*.py src/
 #####################################################
 ## run tasks
 #####################################################
-python -u src/train_lgbm.py > logs/train_lgbm.py
+python -u src/train_lgbm.py > logs/train_lgbm.log
 #####################################################
 
 ## copy needed output files to /home
-scp output/pred.csv $SLURM_SUBMIT_DIR/output/
-scp logs/logs/train_lgbm.py $SLURM_SUBMIT_DIR/logs/
+scp output/pred_lgbm.csv $SLURM_SUBMIT_DIR/output/
+scp output/importance_lgbm.csv $SLURM_SUBMIT_DIR/output/
+scp logs/train_lgbm.log $SLURM_SUBMIT_DIR/logs/

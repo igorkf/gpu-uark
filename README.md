@@ -138,3 +138,23 @@ ls -lht output
 ```
 
 In this case, the training data comprises trials from 2021, whereas validation data trials from 2022. Thus, this is a case of CV0-Year, where environments from a future year are untested. You could test other cross-validation scenarios, but this would demand some changes in the code.
+
+### Train a LightGBM model
+With all the data available, now we fit and evaluate the models. 
+
+1. Fit and evaluate the model:
+    ```
+    sbatch 4-train_lgbm.sh 
+    ```
+
+Check the logs:
+```
+cat logs/train_lgbm.logs
+```
+
+Check mean predictive ability across environments:
+```
+cat logs/train_lgbm.log | grep "mean env corr:"
+```
+
+Predictions are stored at `output/pred.csv`.
