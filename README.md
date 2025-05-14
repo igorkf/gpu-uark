@@ -157,4 +157,48 @@ Check mean predictive ability across environments:
 cat logs/train_lgbm.log | grep "mean env corr:"
 ```
 
-Predictions are stored at `output/pred.csv`.
+Predictions are stored at `output/pred_lgbm.csv`.
+
+### Train a neural network with PyTorch
+As the cluster has GPU available, we can fit neural networks using the GPU.   
+
+1. Run:
+    ```
+    # for CPU
+    sbatch 5-train_nn_cpu.sh
+    ```
+    ```
+    # for GPU
+    sbatch 5-train_nn_gpu.sh
+    ```
+
+It will take some minutes. We can check the job status. For example:
+```
+squeue -u igorf
+```
+gives:
+```
+(myenv) c1601:igorf:~/repos/gpu-uark$ squeue -u igorf
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+            716165   cloud72   nn_cpu    igorf  R       7:07      1 c1601
+            716169     gpu06   nn_gpu    igorf  R       4:59      1 c1702
+```
+
+One model is using CPUs (`partition=cloud72`) and the other is using GPU (`partition=gpu06`).   
+
+
+#### Checking GPU metrics
+1. Open a new tab of your terminal and connect to the node displayed above (in this exmaple, it was ran at `c1702`):
+    ```
+    ssh c1702
+    ```
+
+2. Show GPU metrics every 0.1 seconds:
+    ```
+    watch -n 0.1 nvidia-smi
+    ```
+
+See the usage (%), temperature (C), etc.   
+In this case, as the data is not that big, the usage is about 20% only.   
+The results for both cases (CPU) and (GPU) should be similar, although using the GPU can be non-deterministic for some operations.   
+Predictions are stored at `output/pred_nn_*.csv`.
