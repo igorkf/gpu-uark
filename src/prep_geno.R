@@ -8,6 +8,7 @@ library(gdsfmt)
 library(SNPRelate)
 require(dplyr)
 require(data.table)
+require(ggplot2)
 
 filter_maf <- function(tab, cutoff) {
   ns <- nrow(tab)
