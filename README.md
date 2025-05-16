@@ -200,7 +200,13 @@ One model is using CPUs (`partition=cloud72`) and the other is using GPU (`parti
 
 See the usage (%), temperature (C), etc.   
 In this case, as the data is not that big, the usage is about 20% only.   
-The results for both cases (CPU) and (GPU) should be similar, although using the GPU can be non-deterministic for some operations.   
+The results for both cases (CPU) and (GPU) should be similar, although using the GPU can be non-deterministic for some operations.
+
+3. Logout from the node:
+    ```
+    logout
+    ```
+   
 Predictions are stored at `output/pred_nn_*.csv`.
 
 ## Coding in the cluster using an Integrated Development Environment (IDE)
@@ -221,8 +227,8 @@ After downloading and installing the IDE, we need to set some configurations.
 3. Choose the Users option (e.g., for my Windows it it `C:\Users\igork\.ssh\config`
 4. Type the following (changing USERNAME by your username):
     ```
-    Host c1601
-      HostName c1601
+    Host c1602
+      HostName c1602
       ProxyJump hpc-portal2.hpc.uark.edu
       User USERNAME
 
@@ -231,17 +237,17 @@ After downloading and installing the IDE, we need to set some configurations.
       User USERNAME
     ```
 
-The configuration above connects to the login node and "jumps" to the given node (in this case, `c1601`). This means the IDE will connect to the node `c1601`, which uses the `cloud72` partition. If you want to connect to another node, change the `Host NODE` and `HostName NODE` parts.   
+The configuration above connects to the login node and "jumps" to the given node (in this case, `c1602`). This means the IDE will connect to the node `c1602`, which uses the `cloud72` partition. If you want to connect to another node, change the `Host NODE` and `HostName NODE` parts.   
 
 5. Hit again `Ctrl + Shift + P`, type `Connect to Host...` and hit `Enter`
 6. Choose the node you typed above.
 
 A new window will pop up, and, if the connection was successful, you now are connect to the cluster. Open a terminal inside your IDE and you should see something like this:
 ```
-c1601:igorf:~$
+c1602:igorf:~$
 ```
 
-This means we are using the node `c1601`. For now on, you can code and run computational things in the terminal if you need.
+This means we are using the node `c1602`. For now on, you can code and run computational things in the terminal if you need.
 
 ### Potential problems
 
@@ -249,26 +255,32 @@ This means we are using the node `c1601`. For now on, you can code and run compu
 We tried to connect to a specific node, but this node doesn't "know" who is trying to connect. In this case, we need to add our public key in the node's authorized keys list. 
 
 1. Open a new terminal on your local machine (note connected to the cluster)
-2. Print your public key and copy it
+2. Create a public key:
+    ```
+    ssh-keygen
+    ```
+3. Follow the steps shown on the screen
+
+4. Print your public key and copy it (change FILENAME to your filename)
     ```
     # in Windows
-    type C:\Users\igork\.ssh\id_rsa.pub
+    type C:\Users\igork\.ssh\FILENAME.pub
     ```
     ```
     # mac and Linux
-    cat ~/.ssh/id_rsa.pub
+    cat ~/.ssh/FILENAME.pub
     ```
-3. Login on the cluster (change USERNAME to your username):
+5. Login on the cluster (change USERNAME to your username):
     ```
     ssh USERNAME@hpc-portal2.hpc.uark.edu
     ```
 
-4. Connect to the node chosen above (in this case, `c1601`):
+6. Connect to the node chosen above (in this case, `c1602`):
     ```
-    ssh c1601
+    ssh c1602
     ```
 
-5. Open the authorized keys file:
+7. Open the authorized keys file:
     ```
     nano cat ~/.ssh/authorized_keys
     ```
