@@ -255,7 +255,7 @@ This means we are using the node `c1602`. For now on, you can code and run compu
 We tried to connect to a specific node, but this node doesn't "know" who is trying to connect. In this case, we need to add our public key in the node's authorized keys list. 
 
 1. Open a new terminal on your local machine (note connected to the cluster)
-2. Create a public key:
+2. Create a public key (if you don't have one):
     ```
     ssh-keygen
     ```
